@@ -1,6 +1,6 @@
-﻿#Region Get-PartnerList
+#Region Get-PartnerList
 function Get-PartnerList {
-       
+
     <#
     .SYNOPSIS
         Retrieves a list of partners from a CSP tenant.
@@ -40,11 +40,11 @@ function Get-PartnerList {
     )
 
     Connect-MgGraph -Scopes Directory.Read.All
-    $partnerlist = Get-MgContract -Property "defaultDomainName,customerId,DisplayName"
+    $partnerlist = Get-MgContract -Property "defaultDomainName,customerId,DisplayName" -All
 
         if ($TenantID) {
 
-        $partnerlist = Get-MgContract -Property "defaultDomainName,customerId,DisplayName" | Where-Object {$_.customerId -eq $TenantID}
+        $partnerlist = Get-MgContract -Property "defaultDomainName,customerId,DisplayName" -All| Where-Object {$_.customerId -eq $TenantID}
         if (!$partnerlist) {
             Throw "No Partner found with TenantID: $TenantID"
         }
@@ -59,21 +59,40 @@ function Get-PartnerList {
 
         }
             elseif ($Domain) {
-            $partnerlist = Get-MgContract -Property "defaultDomainName,customerId,DisplayName" 
-            $issuer = invoke-restmethod -uri "https://login.microsoftonline.com/$Domain/.well-known/openid-configuration" -method get
-            $TenantID =  $issuer.issuer.Split("/")[3]
-            if ($partnerlist.CustomerId -notcontains $TenantID) {
-            Throw "No Partner found with TenantID: $TenantID"
-            }
-                elseif ($partnerlist.CustomerId -contains $TenantID){
-                $partner = $partnerlist | Where-Object {$_.customerId -eq $TenantID}
-                $CustomObject = [PSCustomObject]@{
-                    DisplayName = $partner.DisplayName
-                    DefaultDomainName = $partner.defaultDomainName
-                    TenantID = $partner.customerId
+                if ($Domain.Split(".")[-2] -eq "onmicrosoft") {
+                    $partnerlist = ""
+                    $partnerlist = Get-MgContract -Property "defaultDomainName,customerId,DisplayName" -All| Where-Object {$_.defaultDomainName -eq $Domain}
+                    if (!$partnerlist) {
+                        Throw "No Partner found with Domain: $domain"
                     }
-                $customObject
+                    else {
+                        $CustomObject = [PSCustomObject]@{
+                            DisplayName = $partnerlist.DisplayName
+                            DefaultDomainName = $partnerlist.defaultDomainName
+                            TenantID = $partnerlist.customerId
+                            }
+                        $customObject
+                    }
+
                 }
+                else {
+                    $partnerlist = Get-MgContract -Property "defaultDomainName,customerId,DisplayName" -All
+                    $issuer = invoke-restmethod -uri "https://login.microsoftonline.com/$Domain/.well-known/openid-configuration" -method get
+                    $TenantID =  $issuer.issuer.Split("/")[3]
+                    if ($partnerlist.CustomerId -notcontains $TenantID) {
+                    Throw "No Partner found with TenantID: $TenantID"
+                    }
+                        elseif ($partnerlist.CustomerId -contains $TenantID){
+                        $partner = $partnerlist | Where-Object {$_.customerId -eq $TenantID}
+                        $CustomObject = [PSCustomObject]@{
+                            DisplayName = $partner.DisplayName
+                            DefaultDomainName = $partner.defaultDomainName
+                            TenantID = $partner.customerId
+                            }
+                        $customObject
+                        }
+                }
+            
             
             }
                 else {
