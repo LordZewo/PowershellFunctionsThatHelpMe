@@ -12,8 +12,8 @@ function New-PasswordGenerator {
     .EXAMPLE
         PS C:\> New-PasswordGenerator
         Generates a random password like "2V!7ca5H+X9L".
-    .LINK
-        https://example.com/documentation
+    .AUTHOR
+       https://github.com/LordZewo
     #>
     
     [CmdletBinding()]
