@@ -22,7 +22,7 @@ function Get-PartnerList {
         Requires the Directory.Read.All access.
 
     .AUTHOR
-        Sigurður R. Magnússon
+       https://github.com/LordZewo
         15.Feb.2024
     #>
 
