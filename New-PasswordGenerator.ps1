@@ -69,7 +69,7 @@ function New-PasswordGenerator {
     $PArray =  $password.ToCharArray()
 
     do {
-    $randomNumber = Get-Random -Maximum $PasswordLength
+    $randomNumber = Get-Random -Maximum $PArray.lenght
         $pass = $pass += $PArray[$randomNumber] 
     
         $passcounter++
