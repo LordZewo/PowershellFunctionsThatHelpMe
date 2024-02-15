@@ -33,6 +33,8 @@ function Get-GraphSharepointSiteIDAndAccess {
 
     Description:
     This example retrieves detailed information about the specific permission with the provided permission ID for the specified SharePoint site.
+.AUTHOR
+   https://github.com/LordZewo
 #>
 
 #Requires -Modules "Microsoft.Graph.sites"
