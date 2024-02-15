@@ -39,7 +39,7 @@ function Get-PartnerList {
     [string] $Domain
     )
 
-    Connect-MgGraph -Scopes Directory.Read.All
+    Connect-MgGraph -Scopes Directory.Read.All -NoWelcome
     $partnerlist = Get-MgContract -Property "defaultDomainName,customerId,DisplayName" -All
 
         if ($TenantID) {
@@ -54,7 +54,7 @@ function Get-PartnerList {
                 DefaultDomainName = $partnerlist.defaultDomainName
                 TenantID = $partnerlist.customerId
                 }
-            $customObject
+            
         }
 
         }
@@ -71,31 +71,40 @@ function Get-PartnerList {
                             DefaultDomainName = $partnerlist.defaultDomainName
                             TenantID = $partnerlist.customerId
                             }
-                        $customObject
+                        
                     }
 
                 }
                 else {
+                    $partnerlist = ""
                     $partnerlist = Get-MgContract -Property "defaultDomainName,customerId,DisplayName" -All
-                    $issuer = invoke-restmethod -uri "https://login.microsoftonline.com/$Domain/.well-known/openid-configuration" -method get
+                    try {
+                        $issuer = invoke-restmethod -uri "https://login.microsoftonline.com/$Domain/.well-known/openid-configuration" -method get
+                        $TenantID =  $issuer.issuer.Split("/")[3]
+                    }
+                    catch {
+                        write-host "Domain not connected to M365" -ForegroundColor Yellow
+                        return $null
+                    }
+            
                     $TenantID =  $issuer.issuer.Split("/")[3]
                     if ($partnerlist.CustomerId -notcontains $TenantID) {
                     Throw "No Partner found with TenantID: $TenantID"
                     }
                         elseif ($partnerlist.CustomerId -contains $TenantID){
-                        $partner = $partnerlist | Where-Object {$_.customerId -eq $TenantID}
+                        $partner = $partnerlist | Where-Object customerId -eq $TenantID
                         $CustomObject = [PSCustomObject]@{
                             DisplayName = $partner.DisplayName
                             DefaultDomainName = $partner.defaultDomainName
                             TenantID = $partner.customerId
                             }
-                        $customObject
+                        
                         }
                 }
             
             
             }
-                else {
+                elseif (!$TenantID -and !$Domain) {
                     Return $partnerlist
                     Throw $null
                 }
