@@ -25,6 +25,8 @@
 .EXAMPLE
     Set-GraphSharepointAppAccess -siteID "contoso.sharepoint.com,69d2cbc2-dd48-4df7-9090-1116242350d9,cde51e0b-cc35-4c03-942b-821b2fb8869c" -accessLevel "Remove" -DelegateToID "89ea5c94-7736-4e25-95ad-3fa95f62b66e"
     Removes the access rights for the application with ID '89ea5c94-7736-4e25-95ad-3fa95f62b66e' from the specified SharePoint site.
+.AUTHOR
+   https://github.com/LordZewo
 #>
 
 
