@@ -15,6 +15,8 @@ function Connect-All {
    Ensure that you have the required version of PowerShell installed.
 .EXAMPLE
    Connect-All
+.AUTHOR
+   https://github.com/LordZewo
 #>
        Connect-MsolService
        Connect-ExchangeOnline
