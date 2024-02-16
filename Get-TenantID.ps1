@@ -27,7 +27,7 @@ function Get-TenantID {
         )
         $ErrorText1 = "        TenantID not found for domain $Domain. Please check the domain name and try again.
         Hint: copy / paste  senders domain name, check a domain registar or try the following powershell commands:
-        resolve-dnsname -name $domain -type MX"
+        resolve-dnsname -name $domain -type MX
         resolve-dnsname -name $domain -type NS" 
         #Region working variables
         $TenantID = ""
