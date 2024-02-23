@@ -36,5 +36,5 @@ function Get-DomainContolers {
    Set-StrictMode -Version Latest
    # Sets the Tab key to the MenuComplete function, which provides tab-completion for parameter names
    Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
-   }
+}
    #EndRegion
