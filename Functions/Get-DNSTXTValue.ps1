@@ -31,7 +31,7 @@ function Get-DNSTXTValue {
         [string] $Domain
         )
 
-            Resolve-DnsName -Name $Domain -Type TXT |Select-Object -ExpandProperty strings |Select-String $SearchString |foreach { $_ -split " "} |Select-String $SearchString
+            Resolve-DnsName -Name $Domain -Type TXT |Select-Object -ExpandProperty strings |Select-String $SearchString |ForEach-Object { $_ -split " "} |Select-String $SearchString
 
 
     # Enables strict mode, which helps detect common coding errors
