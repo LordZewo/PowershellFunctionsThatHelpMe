@@ -15,6 +15,14 @@ function Get-SPFFromDNS {
 .EXAMPLE
     Get-SPFFromDNS -DomainName "example.com" -SearchString "exclaimer"
     Retrieves the TXT value of the DNS record for the domain name "example.com" and searches for the string "exclaimer".
+.EXAMPLE
+    Get-SPFFromDNS -Domain contoso.com
+    v=spf1
+    include:spf.protection.outlook.com
+    -all
+.EXAMPLE
+    Get-SPFFromDNS -Domain contoso.com -SearchString outlook
+    include:spf.protection.outlook.com 
 .AUTHOR
     https://github.com/LordZewo
 #>
