@@ -25,10 +25,10 @@ function Get-DNSSPF {
 
         #define parameter
         Param(
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelineByPropertyName=$true, HelpMessage="IP of Sending Server")]
-        [string] $SearchString,
         [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelineByPropertyName=$true, HelpMessage="Domain of Sender address")]
-        [string] $Domain
+        [string] $Domain,
+        [Parameter(Mandatory=$false, ValueFromPipeline=$true, ValueFromPipelineByPropertyName=$true, HelpMessage="IP of Sending Server")]
+        [string] $SearchString = "spf"
         )
         $result = ""
 
