@@ -1,19 +1,19 @@
 ﻿#Region function name and func
-function Get-DNSSPF {
+function Get-SPFFromDNS {
 <#
 .SYNOPSIS
     Retrieves the TXT value of a DNS record and searches for a specific string.
 .DESCRIPTION
-    The Get-DNSSPF function retrieves the TXT value of a DNS record for a given domain name and searches for a specific string.
+    The Get-SPFFromDNS function retrieves the TXT value of a DNS record for a given domain name and searches for a specific string.
     It uses the Resolve-DnsName cmdlet to perform the DNS query and returns the searched TXT value as a string.
     This function is useful for scenarios where you need to quickly check for include etc values in spf.
 .NOTES
     This function requires the Resolve-DnsName cmdlet, which is available in Windows PowerShell 3.0 or later.
     It does not support Linux or other non-Windows operating systems.
 .LINK
-    https://example.com/help/Get-DNSSPF
+    https://example.com/help/Get-SPFFromDNS
 .EXAMPLE
-    Get-DNSSPF -DomainName "example.com" -SearchString "exclaimer"
+    Get-SPFFromDNS -DomainName "example.com" -SearchString "exclaimer"
     Retrieves the TXT value of the DNS record for the domain name "example.com" and searches for the string "exclaimer".
 .AUTHOR
     https://github.com/LordZewo
