@@ -18,6 +18,7 @@ function Connect-All {
 .AUTHOR
    https://github.com/LordZewo
 #>
+[cmdletbinding(SupportsShouldProcess=$True)]
        Connect-MsolService
        Connect-ExchangeOnline
        Connect-AzureAD
