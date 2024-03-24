@@ -19,9 +19,9 @@ function Get-DomainContolers {
         https://github.com/LordZewo
         #>
            
-   # Enables tab-completion for parameter names
-   [CmdletBinding()]
-   
+   # Enables tab-completionfor parameter names and whatif
+   [cmdletbinding(SupportsShouldProcess=$True)]
+ 
         #define parameter
         Param(
         [Parameter(Mandatory=$true, ValueFromPipeline=$true, ValueFromPipelineByPropertyName=$true, HelpMessage="Domain")]
